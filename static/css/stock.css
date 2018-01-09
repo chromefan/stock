@@ -1,0 +1,153 @@
+@CHARSET "UTF-8";
+
+.form-signin {
+text-align: center;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+            margin-bottom: 10px;
+}
+.modal-header h3 {
+	margin: 0;
+	line-height: 30px;
+	border:0;
+
+}
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+}
+.login .sns span{
+	float: left;
+}
+.login .sns a {
+	float: left;
+	height: 20px;
+	width: 20px;
+	overflow: hidden;
+	margin: auto 0 auto 5px;
+}
+
+
+.main-social{
+	text-align: left;
+	width: 340px;
+	margin:10px auto;
+	padding-bottom: 20px;
+}
+.main-social > div{
+	display: inline-block;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.main-wechat:before{
+	content: "微信扫码登录";
+	font-size: 12px;
+	background: #fff;
+	padding: 5px 10px;
+}
+.main-wechat {
+
+}
+.main-wechat {
+	width: 302px;
+	margin: 0 auto;
+	border-top: 1px solid rgba(67,79,93,0.2);
+}
+#login  {
+	width:380px;
+}
+.user-left-menu{
+	font-size:16px;
+	border-right: 1px solid #E9E9E9;
+    float: left;
+    padding: 10px;
+    text-align: center;
+    width: 15%;
+	margin-top: 30px;
+}
+.nav-header{
+	font-size:16px;
+}
+.user-left-menu li {
+	line-height:34px;
+}
+.user-form{
+    float: left;
+    margin-left: 20px;
+    width: 75%;
+	margin-top: 20px;
+}
+.toolbar {
+	border-bottom: 2px solid #dddddd;
+	margin-bottom: 40px;
+}
+.po-content .form-actions {
+	width: 300px;
+	padding: 0px;
+}
+.title{
+	border-top:0px;
+	margin-top:10px;
+	margin-bottom:30px;
+}
+.po-content {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin: 30px auto 0;
+    padding: 20px;
+    width: 80%;
+}
+
+.stock-list {
+	 padding: 0 40px 40px;
+}
+.watch-content{
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin: 30px auto 0;
+    padding: 10px;
+    width: 80%;
+}
+.watch-list{
+	padding: 0;
+}
+.watch-content small{
+	color:#333333;
+}
+.page-header >h4 {
+	padding:0px;
+	border:0px;
+}
+.panel-default {
+border-color: #ddd;
+}
+.panel {
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.panel-default>.panel-heading {
+	color: #333;
+	background-color: #f5f5f5;
+	border-color: #ddd;
+}
+.panel-heading {
+	padding: 10px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}

@@ -1,0 +1,53 @@
+<include file="Public:header" />
+<form class="form-inline definewidth m20" action="/finance/add/" method="get">  
+   
+    <!--  input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value="">&nbsp;&nbsp;  
+    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; --><button type="button" class="btn btn-success" id="addnew">添加财务数据</button><a href="/stock/view/code/{$stock.code}">查看细详</a> 
+</form>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th>股票代码</th>
+        <th>股票名称</th>
+        <th>年份</th>
+		<th>每股收益</th>
+		<th>净利润（亿）</th>
+		<th>最高股价</th>
+		<th>最低股价</th>
+		<th>平均股价</th>
+        <th>管理操作</th>
+    </tr>
+    </thead>
+     <volist name="data" id="d">
+	     <tr>
+            <td>{$d.code}</td>
+            <td>{$d.name}</td>
+            <td>{$d.year}</td>
+			<td>{$d.eps}</td>
+			<td>{$d.np}</td>
+            <td>{$d.price_max}</td>
+			<td>{$d.price_min}</td>
+			<td>{$d.price}</td>
+            <td>
+                  <a href="/finance/edit/id/{$d.id}">编辑</a>
+				  <a href="javascript:void(0);" onclick="del({$d.id},'finance')">删除</a>
+            </td>
+        </tr>
+       </volist> 
+       </table>
+<div class="inline pull-right page">
+         共 {$total} 条记录  </div>
+</body>
+</html>
+<script>
+    $(function () {
+        
+		$('#addnew').click(function(){
+
+				window.location.href="/finance/add/code/{$stock.code}";
+		 });
+
+
+    });
+
+</script>

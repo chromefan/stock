@@ -1,0 +1,57 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner" style="padding: 11px 0; font-size: 14px;">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/" style="color: #ffffff;font-size:25px; font-weight: bold;">知 股</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li  class="one"><a href="/">首页</a></li>
+					<li  class="hot"><a href="/stock/hot/">热门股票</a></li>
+                    <li  class="three"><a href="/stock/top/">精选股票</a></li>
+                    <li  class="four"><a href="/stock/best/">高分推荐</a></li>
+					<li  class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">涨跌幅榜 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="/stock/change">个股涨幅榜</a></li>
+                          <li><a href="/stock/change_trade">板块涨幅榜</a></li>
+                        </ul>
+                     </li>
+					<li  class="two"><a href="/stock/">筛选股票</a></li>
+                    <li  class="six"><a href="/news/">知股财经</a></li>
+                </ul>
+                <form class="nav navbar-form navbar-left" action="/stock/index" method="get">
+                    <input class="span2" type="text" name="keyword"  placeholder="股票名称/代码/行业名称">
+                </form>
+                <ul class="nav navbar-nav navbar-right">      
+               		  <lt name="user.uid" value="0"> <li><a href="#login"  data-toggle="modal">登录</a></li> 
+               		  <li class="divider-vertical"></li></lt>
+                     
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{$user.userface}" alt="{$user.username}"  style="height:30px; margin-right:10px"  class="img-circle">{$user.username} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="/user/set">我的帐号</a></li>
+                          <li><a href="/user/watchlist">投资组合</a></li>
+                          <li class="divider"></li>
+                          <li><a href="/public/logout">注销退出</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<include file="Public:login" />
+<div class="security-banner">
+    <div class="security-banner-inner">
+		<volist name="market_data" id="d">
+			<span>{$d.name}</span>
+			<span <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> > {$d.index}</span>
+			<span <gt name="d.change" value="0"> class="red" </gt> <lt name="d.change" value="0"> class="green" </lt> >{$d.change}</span>
+			<span <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> >{$d.chg}</span>
+		</volist>
+    </div>
+</div>

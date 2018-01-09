@@ -1,0 +1,38 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.four').addClass( 'active')
+    })
+</script>
+<h1>高分排行</h1>
+<p>格雷厄姆认为，衡量公司绩效的六种基本因素：收益性、稳定性、成长性、财务状况、股利以及历史价格等。</p>
+<p><strong>安全边际</strong>就是指投资者所要投资股票的买入价格和内在价值之间有一定的差距</p>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>股价</th>
+		<th>累计涨跌幅</th>
+		<th>3年投资回报率</th>
+		<th>推荐指数</th>
+    </tr>
+    </thead>
+     <volist name="data" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+			<td <gt name="d.roi_mid" value="0.3"> class="red"</gt> <lt name="d.roi_mid" value="0.05"> class="green" </lt> ><php>echo $d['roi_mid']*100;</php>%</td>
+            <td>
+				<strong><em style="color:red;">{$d.score}</em></strong>
+            </td>
+        </tr>
+       </volist> 
+       </table>
+<include file="Public:footer" />

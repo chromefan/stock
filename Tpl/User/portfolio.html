@@ -1,0 +1,125 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<style>
+<!--
+.typeahead strong {
+	color: red;
+	font-weight: normal;
+}
+-->
+</style>
+<div class="po-content" >
+
+<form class="form-horizontal">
+<h4 class="title">基本信息</h4>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">组合名称</label>
+    <div class="controls">
+      <input type="text" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">组合介绍</label>
+    <div class="controls">
+      <textarea rows="3"></textarea>
+    </div>
+  </div>
+  <h4 class="title">组合股票 
+  	<div class="input-append pull-right"><input id="product_search" type="text" data-provide="typeahead"><a href="#" class="btn"><i  class="icon-plus">添加</i></a></div>
+  		
+  		</h4>
+  <div class="stock-list">
+  <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Panel heading</div>
+  <h5><span>总市值：600340.04 </span><span class="red">持仓盈亏：+2000.33</span>  </h5>
+  <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>股票代码</th>
+                  <th>股票名称</th>
+                  <th>当前价格</th>
+                  <th>买入价格</th>
+                  <th>买入日期</th>
+                  <th>股票数量</th>
+                  <th>股票市值</th>
+                  <th>持仓盈亏</th>
+                  <th>盈亏比例</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="red">
+                  <td>008636</td>
+                  <td>美的集团</td>
+                  <td>39.90</td>
+                  <td>2015-04-07</td>
+                  <td>38.90</td>
+                  <td>1000</td>
+                  <td>399000</td>
+                  <td>1000</td>
+                  <td>3.3%</td>
+                </tr>
+                <tr class="green">
+                  <td>008636</td>
+                  <td>美的集团</td>
+                  <td>39.90</td>
+                  <td>2015-04-07</td>
+                  <td>38.90</td>
+                  <td>1000</td>
+                  <td>399000</td>
+                  <td>-1000</td>
+                  <td>-3.3%</td>
+                  <td><a href="#">移除</a></td>
+                </tr>
+              </tbody>
+   </table>
+   </div>
+   </div>
+   <div class="form-actions">
+	  <button type="submit" class="btn btn-large btn-block btn-success">完成创建投资组合</button>
+	</div>
+</form>
+
+</div>
+<script type="text/javascript" src="/static/js/bootstrap-typeahead.js"></script> 
+<script>
+$(document).ready(function($) {
+   // Workaround for bug in mouse item selection
+   $.fn.typeahead.Constructor.prototype.blur = function() {
+      var that = this;
+      setTimeout(function () { that.hide() }, 250);
+   };
+ 
+   $('#product_search').typeahead({
+	    source: function (query, process) {
+	        var parameter = {keyword: query};
+	        $.post('/stock/autoComplete', parameter, function (data) {
+	            process(data);
+	        },'json');
+	    },
+	    highlighter: function (item) {
+	        var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+	        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+	            return '<strong>' + match + '</strong>'
+	        })
+	    }
+	});
+})
+</script>
+ 
+<!-- Modal -->
+<div id="at_stock" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+
+  </div>
+  <div class="modal-footer">
+  	<button class="btn btn-primary">确认 </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+</div>
+<include file="Public:footer" />

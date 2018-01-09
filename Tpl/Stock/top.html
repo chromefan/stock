@@ -1,0 +1,44 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.three').addClass( 'active')
+    })
+</script>
+<h1>精选股票30只</h1>
+<p>默认按照3年投资回报率排序</p>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>股价</th>
+		<th>市盈率</th>
+		<th>市销率</th>
+		<th>净利润增长率</th>
+		<th>年复合增长率</th>
+		<th>累积涨跌幅</th>
+		<th>3年投资回报率</th>
+		<th>7年投资回报率</th>
+    </tr>
+    </thead>
+     <volist name="data" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+			
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td>{$d.pe}</td>
+			<td>{$d.psr}</td>
+			<td><php>echo $d['pgr']*100;</php>%</td>
+			<td><php>echo $d['g']*100;</php>%</td>
+			<td <gt name="d.chg" value="0"> class="red"</gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+			<td <gt name="d.roi_mid" value="0.3"> class="red"</gt> <lt name="d.roi_mid" value="0.05"> class="green" </lt> ><php>echo $d['roi_mid']*100;</php>%</td>
+			<td <gt name="d.roi" value="0.3"> class="red"</gt> <lt name="d.roi" value="0.05"> class="green" </lt> ><php>echo $d['roi']*100;</php>%</td>
+        </tr>
+       </volist> 
+       </table>
+<include file="Public:footer" />

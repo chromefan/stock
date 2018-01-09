@@ -1,0 +1,91 @@
+<include file="Public:header" />
+<load href="__JS__/ajaxfileupload.js" />
+<form action="/stock/{$action}" method="post" class="definewidth m20">
+<if condition="$data.id egt 1">
+	<input type="hidden" name="id" value="{$data.id}" />
+</if>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td class="tableleft" width="30%">股票代码</td>
+        <td><input type="text" name="code" value="{$data.code}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">股票名称</td>
+        <td><input type="text" name="name" value="{$data.name}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">流通市值</td>
+		<td><input type="text" name="cap" value="{$data.cap}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">销售收入</td>
+		<td><input type="text" name="rev" value="{$data.rev}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">市盈率</td>
+		<td><input type="text" name="pe" value="{$data.pe}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">当前股价</td>
+		<td><input type="text" name="price" value="{$data.price}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">当前每股净资产</td>
+		<td><input type="text" name="bvps" value="{$data.bvps}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">当前净资产收益率</td>
+		<td><input type="text" name="roe" value="{$data.roe}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft"></td>
+        <td>
+            <button type="submit" class="btn btn-primary" type="button">保存</button>&nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+function TopPicUpload(v, _url_, img_id)
+{
+    if(v.value != '')
+    {
+        var ext = v.value.substring(v.value.lastIndexOf(".")+1).toUpperCase();
+        if(ext=='JPG' || ext=='JPEG' || ext=='GIF' || ext=='PNG')
+        {
+            //$("#"+v.id+'_msg').show();
+            $('#file_msg').html("<img src='/public/images/loading.gif'>正在上传中,请稍后");
+            alert(v.id);
+            $.ajaxFileUpload({
+                url:_url_,
+                secureuri:false,
+                fileElementId:v.id,
+                dataType: 'text',
+                data:{id:v.id, img_id:img_id},
+                success: function (data, status)
+                {
+                    $('#file_msg').html('');
+                    $('#file_msg').html("<img style='width:200px;' src='"+data+"'>");
+                    $('#img').val(data);
+                },
+                error: function (data, status, e)
+                {
+                    alert(e);
+                }
+            })
+        } else {
+            alert('只能上传图片');
+        }
+    }
+}
+</script>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				history.go(-1);
+		 });
+
+    });
+</script>

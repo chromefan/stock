@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.hot').addClass( 'active')
+    })
+</script>
+<p>知股网统计10日内涨超20%的股票</p>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>股价</th>
+		<th>市盈率</th>
+		<th>净利润增长率</th>
+		<th>10日涨幅</th>
+    </tr>
+    </thead>
+     <volist name="data" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+			
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td>{$d.pe}</td>
+			<td><php>echo $d['pgr']*100;</php>%</td>
+			<td <gt name="d.chg10" value="0"> class="red"</gt> <lt name="d.chg10" value="0"> class="green" </lt> ><php>echo $d['chg10']*100;</php>%</td>
+        </tr>
+       </volist> 
+       </table>
+<include file="Public:footer" />

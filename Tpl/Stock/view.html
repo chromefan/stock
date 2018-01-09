@@ -1,0 +1,484 @@
+<include file="Public:header" />
+<include file="Public:navi" />
+<script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+			startRequest();
+            setInterval("startRequest()", 6000);
+        });
+        function startRequest() {
+            $("#nowtime").text((new Date()).toString());
+            $('#divNowTime').text((new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());
+			var url="/stock/realTimeData?code={$data.code}";
+			$.post(url, function(data) {
+				    var temp = "";
+					var up='style="color:red;margin-left: 20px;"';
+					var down='style="color:green;margin-left: 20px;"';
+					var style='';
+					var chg_type='';
+					if(data.change <0){
+						style=down;
+						chg_type='';
+					}else if(data.change>0){
+						style=up;
+						chg_type='+';
+					}else{
+						chg_type='';
+						style='style="margin-left: 20px"';
+					}
+                    temp = "<span style=\"font-size: 30px\"><strong "+style+">"+data.price+"</strong></span><span><strong "+style+">"+chg_type+data.change+"</strong><strong "+style+">"+chg_type+data.chg+"</strong></span>";
+                    $("#realData").html(temp);
+			},'json');
+        }
+</script>
+<h1>{$data.name}<small  style="font-size: 18px;
+margin-left: 20px;">{$data.code}</small>
+<span id="realData" style="font-size: 20px;
+margin-left: 50px;"></span>
+</h1>
+
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td class="tableleft" style="width:20%;">所属行业板块</td>
+		<td><a href="/stock/index/?keyword={$data.hy_name}" target="_blank">{$data.hy_name}</a></td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">总市值(亿)</td>
+		<td><php>echo sprintf('%.2f',$data['cap_all']);</php></td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">流通市值(亿)</td>
+		<td><php>echo sprintf('%.2f',$data['cap']);</php></td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">销售收入(亿)</td>
+		<td><php>echo sprintf('%.2f',$data['rev']);</php></td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">市盈率</td>
+		<td>{$data.pe}</td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">市净率</td>
+		<td>{$data.pb}</td>
+    </tr>
+    <tr>
+        <td class="tableleft" style="width:20%;">市销率</td>
+		<td><php>echo sprintf('%.2f',$data['psr']);</php></td>
+    </tr>
+    <tr>
+        <td class="tableleft">净利润增长率年平均</td>
+		<td><php>echo sprintf('%.2f',$data['pgr'])*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft">年复合增长率</td>
+		<td><php>echo $data['g']*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft">价值(当前，3年，7年)</td>
+		<td>{$data.value_min} ~ {$data.value_mid} ~{$data.value_max}   <p>价值=（（基础系数）+盈利能力（管理能力+研发能力+销售能力综合）+（市值增长空间）+（公司成长潜力））*每股收益</p></td>
+    </tr>
+    <tr>
+        <td class="tableleft">当前股价与内在价值比</td>
+		<td><php>echo $data['pv']*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft">安全边际</td>
+		<td>{$data.mos}</td>
+    </tr>
+    <tr>
+        <td class="tableleft">预测增长率</td>
+		<td><php>echo $eps_g_y*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft">3年投资回报率</td>
+		<td><php>echo $data['roi_mid']*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft">7年投资回报率</td>
+		<td><php>echo $data['roi']*100;</php>%</td>
+    </tr>
+    <tr>
+        <td class="tableleft"  style="font-size:14px;">
+         
+		</td>
+        <td>
+		<h3>推荐指数 <strong><em style="color:red;">{$data.score}</em></strong></h3>
+		<ul style="font-size:14px;">
+		<php>$msg =unserialize($data['score_msg']);</php>
+		<volist name="msg" id="m"> 
+			<li>{$m.text}<strong style="color:red; padding-left:20px;"><em>{$m.score}分</em></strong></li>
+		</volist>
+		</ul>
+        </td>
+    </tr>
+    <tr>
+        <td class="tableleft">相关股票</td>
+		<td>
+		 <ul  class="inline" style="width:700px;">
+		<volist name="relate" id="r">
+			<li><a href="/{$r.code}.html">{$r.name}</a></li>
+		</volist>
+		</ul>
+		</td>
+    </tr>
+</table>
+<h3>{$days}天内累积涨跌幅 &nbsp;<strong><em <gt name="data.chg" value="0"> class="red"</gt> <lt name="data.chg" value="0"> class="green" </lt> ><php>echo $data['chg']*100;</php>%</em></strong></h3>
+<table class="table table-bordered">
+    <!--tr>
+		<td><div id="chart_price"></div></td>
+	</tr-->
+    <tr>
+		<td><div id="stock_price"></div></td>
+	</tr>
+</table>
+<p>分享：<div class="bdsharebuttonbox">
+        <A class=bds_tsina title=分享到新浪微博 href="#" data-cmd="tsina"></A>
+        <A class=bds_qzone title=分享到QQ空间 href="#" data-cmd="qzone"></A>
+        <A class=bds_renren title=分享到人人网 href="#" data-cmd="renren"></A>
+        <A class=bds_weixin title=分享到微信 href="#" data-cmd="weixin"></A></div>
+        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{},"image":{"viewList":["tsina","qzone","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></p>
+<h3>财报数据统计</h3>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th>年份</th>
+		<th>每股收益</th>
+		<th>净利润</th>
+    </tr>
+    </thead>
+     <volist name="data.finance_data" id="d">
+	     <tr>
+            <td>{$d.year}</td>
+			<td>{$d.eps}</td>
+			<td>{$d.np}亿</td>
+        </tr>
+       </volist> 
+ </table>
+<h3>每股收益年趋势图</h3>
+<table class="table table-bordered">
+    <tr>
+		<td><div id="chart"></div></td>
+	</tr>
+    <tr>
+		<td><div id="chart2"></div></td>
+	</tr>
+    <tr>
+		<td><div id="chart3"></div></td>
+	</tr>
+    <tr>
+		<td><div id="chart4"></div></td>
+	</tr>
+</table>
+<include file="Public:footer" />
+<script>
+    $(function () {
+		$('#backid').click(function(){
+				window.location.href="/stock/top";
+		 });
+
+    });
+</script>
+
+<script type="text/javascript">
+$(function() {
+
+	$.getJSON('http://www.evalstock.com/stock/json/code/{$data.code}', function(result) {
+		Highcharts.setOptions({
+			global: { useUTC: false  },
+			lang: {
+				months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+				//shortMonths : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+				weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+			},
+		});
+		// Create the chart
+		$('#stock_price').highcharts('StockChart', {
+
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: {
+					second: '%Y-%m-%d<br/>%H:%M:%S',
+					minute: '%Y-%m-%d<br/>%H:%M',
+					hour: '%Y-%m-%d<br/>%H:%M',
+					day: '%Y<br/>%m-%d',
+					week: '%Y<br/>%m-%d',
+					month: '%Y-%m',
+					year: '%Y'
+				}
+			},
+			tooltip:{
+           // 日期时间格式化
+                   xDateFormat: '%Y-%m-%d'
+            },
+			rangeSelector : {
+				selected : 1
+			},
+
+			title : {
+				text : '{$data.name} 历年股价趋势图'
+			},
+			
+			series : [{
+				name : '收盘价',
+				data : result.data,
+				tooltip: {
+					valueDecimals: 2
+				}
+			}]
+		});
+	});
+
+});
+$(function () {
+        $('#chart').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: '每股收益年趋势图'
+            },
+            subtitle: {
+                text: 'Source: {$site_name}'
+            },
+            xAxis: {
+                categories: [{$chart.year}]
+            },
+            yAxis: {
+                title: {
+                    text: '每股收益（元）'
+                }
+            },
+            tooltip: {
+                enabled: false,
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'元';
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            textShadow: '0 0 3px white, 0 0 3px white'
+                        }
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '每股收益',
+                data: [{$chart.eps}]
+            }]
+        });
+});
+
+$(function () {
+	return;
+    $('#chart2').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: '历年每股收益和最高价走势图'
+        },
+        subtitle: {
+            text: 'Source: {$site_name}'
+        },
+        xAxis: [{
+            categories: [{$chart.year}]
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#89A54E'
+                }
+            },
+            title: {
+                text: '每股收益',
+                style: {
+                    color: '#89A54E'
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: '最高价',
+                style: {
+                    color: '#4572A7'
+                }
+            },
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#4572A7'
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: '#FFFFFF'
+        },
+        series: [{
+            name: '最高价（前复权）',
+            color: '#4572A7',
+            type: 'spline',
+            yAxis: 1,
+            data: [{$chart.price}],
+            tooltip: {
+                valueSuffix: ''
+            }
+
+        }, {
+            name: '每股收益',
+            color: '#89A54E',
+            type: 'spline',
+            data: [{$chart.eps}],
+            tooltip: {
+                valueSuffix: ''
+            }
+        }]
+    });
+});
+
+$(function () {
+    $('#chart3').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: '净利润与每股收益走势图'
+        },
+        subtitle: {
+            text: 'Source: {$site_name}'
+        },
+        xAxis: [{
+            categories: [{$chart.year}]
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                formatter: function() {
+                    return this.value;
+                },
+                style: {
+                    color: '#89A54E'
+                }
+            },
+            title: {
+                text: '净利润',
+                style: {
+                    color: '#89A54E'
+                }
+            },
+            opposite: true
+
+        }, { // Secondary yAxis
+            gridLineWidth: 0,
+            title: {
+                text: 'EPS',
+                style: {
+                    color: '#4572A7'
+                }
+            },
+            labels: {
+                formatter: function() {
+                    return this.value;
+                },
+                style: {
+                    color: '#4572A7'
+                }
+            }
+
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 80,
+            floating: true,
+            backgroundColor: '#FFFFFF'
+        },
+        series: [{
+            name: 'EPS',
+            color: '#4572A7',
+            type: 'column',
+            yAxis: 1,
+            data: [{$chart.eps}],
+            tooltip: {
+                valueSuffix: ''
+            }
+
+        }, {
+            name: '净利润',
+            color: '#89A54E',
+            type: 'spline',
+            data: [{$chart.np}],
+            tooltip: {
+                valueSuffix: ' 亿'
+            }
+        }]
+    });
+});				
+	
+$(function () {
+	return;
+	$('#chart4').highcharts({
+	    chart: {
+	        type: 'arearange',
+	        zoomType: 'x'
+	    },
+	    
+	    title: {
+	        text: 'Temperature variation by day'
+	    },
+	
+	    xAxis: {
+			categories: [{$chart.year}],
+	    },
+	    
+	    yAxis: {
+	        title: {
+	            text: null
+	        }
+	    },
+	
+	    tooltip: {
+	        crosshairs: true,
+	        shared: true,
+	        valueSuffix: '°C'
+	    },
+	    
+	    legend: {
+	        enabled: false
+	    },
+	
+	    series: [{
+	        name: 'Temperatures',
+	        data: [
+			  <volist name="chart.p_y" id="c">
+	        	[{$c.year},{$c.price_max},{$c.price_min}],
+			  </volist>
+			 ]
+	    }]
+	});
+});				
+</script>
+
+
+<script type="text/javascript" src="http://cdn.hcharts.cn/highstock/2.0.1/highstock.js"></script>
+<script src="/hchart/js/highcharts-more.js"></script>
+<script src="/hchart/js/modules/exporting.js"></script>
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/4.0.1/modules/exporting.js"></script>

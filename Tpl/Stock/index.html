@@ -1,0 +1,58 @@
+<include file="Public:header" />
+<include file="Public:navi" />
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+        $('.nav').find('li.two').addClass( 'active')
+    })
+</script>
+<p><strong>市销率</strong>:流通市值除以去年12个月的销售收入</p>
+<div id="tablescroll">
+<table class="table table-bordered table-hover definewidth m10" id="thetable">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>股票代码</th>
+        <th>股票名称</th>
+       
+        <th>股价</th>
+		<th>涨幅</th>
+        <th><a href="/stock/?type=pb&ord={$ord_str.pb.ord|intval}">市净率<neq name="ord_str.pb.img" value=""><img src="__IMG__/{$ord_str.pb.img}.gif"></neq></a> </th>
+        <th><a href="/stock/?type=psr&ord={$ord_str.psr.ord|intval}">市销率<neq name="ord_str.psr.img" value=""><img src="__IMG__/{$ord_str.psr.img}.gif"></neq></a> </th>
+        <th><a href="/stock/?type=cap&ord={$ord_str.cap.ord|intval}">流通市值<neq name="ord_str.cap.img" value=""><img src="__IMG__/{$ord_str.cap.img}.gif"></neq></a></th>
+        <th><a href="/stock/?type=pgr&ord={$ord_str.pgr.ord|intval}">净利润增长率<neq name="ord_str.pgr.img" value=""><img src="__IMG__/{$ord_str.pgr.img}.gif"></neq></a></th>
+    </tr>
+    </thead>
+    <volist name="data" key='k' id="d">
+        <tr>
+            <td>{$k}</td>
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html" target="_blank">{$d.name}</a></td>
+           
+            <td>{$d.price}</td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+			<td>{$d.pb}</td>
+            <td>{$d.psr}</td>
+            <td>{$d.cap|intval}亿</td>
+            <td><php>echo sprintf('%.2f',$d['pgr'])*100;</php>%</td>
+        </tr>
+    </volist>
+</table>
+</div>
+<br />
+
+<div class="pagination pagination-centered"><ul>{$page}</ul></div>
+<script type="text/javascript" src="__STATIC__/Js/jquery.tablescroll.js"></script>
+
+<script>
+
+    /*<![CDATA[*/
+    jQuery(document).ready(function($)
+    {
+        $('#thetable').tableScroll({height:700});
+    });
+
+
+    /*]]>*/
+</script>
+<include file="Public:footer" />

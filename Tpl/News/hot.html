@@ -1,0 +1,11 @@
+<div class="sub">
+<div class="hd"><h2>新闻<span>热度排行</span></h2></div>
+<div class="rank">
+		<ul>
+			<volist name="hot" key="key" id="h">
+			<li><a href="/news/{$h.id}.html" title="{$h.title}" target="_blank">{$h.short_title}</a></li>
+			</volist>
+		</ul>
+</div>
+<include file="Public:ad_left" />
+</div>

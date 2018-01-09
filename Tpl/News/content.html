@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.six').addClass( 'active')
+    })
+</script>
+<div class="text-content" style="width: 70%;margin-top: 20px;">
+		<div class="page-header" style="text-align:center;">
+			 <h3 style="border-top:0px;"><php>echo $article['title'];</php></h3>
+			 <p>来源：<a href="{$article.source_url}" target="_blank">{$article.source}</a>  <small style="margin-left: 20px;">{$article.date}</small></p>
+		</div>
+		<div class="wenzi">
+		<notempty name="article.img_url">
+		<p><img alt="{$article.title}" src="{$article.img_url}" style="height: 374px; width: 560px;"></p>
+		</notempty>
+		<php>echo $article['content'];</php></div>
+		<p>分享：<div class="bdsharebuttonbox">
+        <A class=bds_tsina title=分享到新浪微博 href="#" data-cmd="tsina"></A>
+        <A class=bds_qzone title=分享到QQ空间 href="#" data-cmd="qzone"></A>
+        <A class=bds_renren title=分享到人人网 href="#" data-cmd="renren"></A>
+        <A class=bds_weixin title=分享到微信 href="#" data-cmd="weixin"></A></div>
+        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":"text-content","bdSelectMiniList":["tsina","qzone","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></p>
+		<hr>
+		<div id="rand_news_footer">
+			<h4>相关新闻</h4>
+			<ul>
+				<volist name="hot" key="key" id="h">
+				<li><a href="/news/{$h.id}.html" title="{$h.title}" target="_blank">{$h.short_title}</a></li>
+				</volist>
+			</ul>
+		</div>
+</div>
+<include file="Public:footer" />

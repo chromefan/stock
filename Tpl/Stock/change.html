@@ -1,0 +1,45 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.five').addClass( 'active')
+    })
+</script>
+<br>
+<div class="list-left-menu">
+<ul class="nav nav-pills nav-stacked" role="tablist">
+  <li role="presentation" class="<eq name='type' value='up'>active</eq>"><a href="/stock/change?type=up">10日涨幅榜</a></li>
+  <li role="presentation" class="<eq name='type' value='down'>active</eq>"><a href="/stock/change?type=down">10日跌幅榜</a></li>
+  <li role="presentation" class="<eq name='type' value=''>active</eq>"><a href="/stock/change">6月涨幅榜</a></li>
+</ul>
+</div>
+<div class="list-right-table">
+<table class="table" >
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>股价</th>
+		<th>6月涨跌幅</th>
+		<th>10日涨跌幅</th>
+		<th>推荐指数</th>
+    </tr>
+    </thead>
+     <volist name="data" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+			<td <gt name="d.chg10" value="0"> class="red" </gt> <lt name="d.chg10" value="0"> class="green" </lt> ><php>echo $d['chg10']*100;</php>%</td>
+            <td>
+				<strong><em style="color:red;">{$d.score}</em></strong>
+            </td>
+        </tr>
+       </volist> 
+       </table>
+   </div>
+<include file="Public:footer" />

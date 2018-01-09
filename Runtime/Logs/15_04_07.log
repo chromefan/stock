@@ -1,0 +1,4 @@
+[ 2015-04-07T15:24:06+08:00 ] /user/login | ERR: (ThinkException) 非法操作login
+[ 2015-04-07T15:24:10+08:00 ] /user/ | ERR: (ThinkException) 模板不存在[./Tpl/User/index.html]
+[ 2015-04-07T16:03:57+08:00 ] /news/912.html | ERR: (ThinkException) 非法操作912.html
+[ 2015-04-07T17:37:44+08:00 ] /Oauth/callback/type/qq?code=0C437AE00A50261EFEABA47119F01972 | ERR: (ThinkException) 模板不存在[./Tpl/Public/oauthlogin.html]

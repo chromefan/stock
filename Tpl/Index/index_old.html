@@ -1,0 +1,55 @@
+<include file="Public:header" />
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.one').addClass( 'active')
+    })
+</script>
+<include file="Public:navi_navi" />
+<body>
+<div id="index-wrap">
+<div class="index-banner">
+    <div class="index-banner-wrap">
+        <div class="index-banner-inner">
+            <h1>价值分析</h1>
+            <p>
+                计算股票的真实价值，挑选属于你的大牛股，<strong><em class="red">200%</em></strong> 回报不是梦<br>
+            </p>
+            <div class="index-banner-action">
+                <a class="btn btn-success btn-lg" href="/stock/">
+                    马上体验
+                </a>　
+            </div>
+            <div ng-controller="index_carousel_ctrl" class="index-banner-carousel ng-scope">
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<div class="container">
+<div class="security-banner">
+    <div class="security-banner-inner">
+        <h3></h3>
+        <p></p>
+    </div>
+</div>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>费雪筛选</h2>
+          <p>知股采用费雪超级成长股筛选方法，对A股2646只股票进行定时筛选，从中挑选出低市销率的股票，以供选择。</p>
+        </div>
+        <div class="span4">
+          <h2>价值分析</h2>
+          <p>知股使用本杰明·格雷厄姆的价值分析方法，根据历年财报数据，实时分析每一只股票，展现其真实价值，当前股价是否已偏离当前价值
+		  ，预测该只股票的投资回报率，无比强大。</p>
+       </div>
+        <div class="span4">
+          <h2>高分推荐</h2>
+          <p>知股根据超级成长股的三个指标：成长空间、增长速度、股价偏离程度给股票打分，最高10分，最低0分，让结果一目了然。</p>
+        </div>
+      </div>
+
+      <hr>
+<include file="Public:footer" />

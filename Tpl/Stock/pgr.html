@@ -1,0 +1,46 @@
+<include file="Public:header" />
+<load href="__JS__/ajaxfileupload.js" />
+<form action="/stock/{$action}" method="post" class="definewidth m20">
+<if condition="$data.id egt 1">
+	<input type="hidden" name="id" value="{$data.id}" />
+</if>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td class="tableleft" width="30%">股票代码</td>
+        <td>{$data.code}</td>
+    </tr>
+    <tr>
+        <td class="tableleft">股票名称</td>
+        <td>{$data.name}</td>
+    </tr>
+    <tr>
+        <td class="tableleft">当期净利润</td>
+		<td><input type="text" name="p1"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">基础净利润</td>
+		<td><input type="text" name="p2" /></td>
+    </tr>
+    <tr>
+        <td class="tableleft">年数</td>
+		<td><input type="text" name="year" /></td>
+    </tr>
+    <tr>
+        <td class="tableleft"></td>
+        <td>
+            <button type="submit" class="btn btn-primary" type="button">保存</button>&nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				history.go(-1);
+		 });
+
+    });
+</script>

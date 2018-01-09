@@ -1,0 +1,26 @@
+<include file="Public:header" />
+<script>
+function Jump(){
+    window.location.href = '{$jumpUrl}';
+}
+document.onload = setTimeout("Jump()" , {$waitSecond}* 1000);
+</script>
+<div class="container-narrow">
+	<include file="Public:navi" />
+      <hr>
+      <div class="jumbotron" id="msg_page">
+		<h2 class="navbg">错误提醒</h2>
+		<div id="reg">
+			<base target="_self" />
+			<eq name="status" value="0">
+			    <div align="center" style="line-height:2">
+			        <h2 style="color:red;">{$error}</h2>
+			        <notpresent name="closeWin" >
+			          <p>你会在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后返回或者点击 <a  style="color:#c00"  HREF="{$jumpUrl}" >这里</a><br/>
+			           
+			        </notpresent>
+			    </div>
+			</eq>
+	</div>
+</div>
+<include file="Public:footer" />

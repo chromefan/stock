@@ -1,0 +1,37 @@
+<include file="Public:header" />
+<include file="Public:navi"/>
+
+<div class="user-left-menu">
+<ul class="nav nav-list">
+  <li class="nav-header"><i class="icon-cog"></i><span>设置</span></li>
+  <li class="active"><a href="#">帐号设置</a></li>
+</ul>
+</div>
+
+<div class="user-form">
+
+<div class="toolbar border_bottom clearfix new">
+	<div class="pull-right">
+	<ul class="breadcrumb">
+	  <li><i class="icon-map-marker"></i><span class="divider">/</span></li>
+	  <li class="active">编辑用户信息</li>
+	</ul>
+	</div>
+</div>
+<form accept-charset="UTF-8" action="/krypton/users/322732" class="form-horizontal" id="edit_user_322732" method="post" novalidate="novalidate">
+	<div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="patch"><input name="authenticity_token" type="hidden" value="VLgK3+k9HeETzDTupUUscdHSr8SObAreSShHyhuXhVg="></div>
+	<div class="control-group string optional user_name"><label class="string optional control-label" for="user_name">用户昵称</label>
+	<div class="controls"><input class="string optional" id="user_name" name="user[name]" type="text" value="{$user.username}"></div></div>
+	<div class="control-group email optional user_email"><label class="email optional control-label" for="user_email">邮件</label>
+	<div class="controls"><input class="string email optional" id="user_email" name="user[email]" type="email"></div></div>
+	<div class="control-group tel optional user_phone"><label class="tel optional control-label" for="user_phone">联系方式</label>
+	<div class="controls"><input class="string tel optional" id="user_phone" name="user[phone]" type="tel"></div></div>
+	<div class="control-group text optional user_tagline"><label class="text optional control-label" for="user_tagline">一句话介绍自己</label>
+	<div class="controls"><textarea class="text optional" id="user_tagline" name="user[tagline]"></textarea></div></div>
+	<div class="control-group integer optional disabled user_id"><label class="integer optional control-label" for="user_id">用户ID</label>
+	<div class="controls"><input class="numeric integer optional disabled" disabled="disabled" id="user_id" name="user[id]" step="1" type="number" value="{$user.uid}"></div></div>
+	<div class="form-actions"><input class="btn btn btn-primary" data-disable-with="Submitting..." name="commit" type="submit" value="更新用户"></div>
+</form>
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,109 @@
+<include file="Public:header" />
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.one').addClass( 'active')
+    })
+</script>
+<include file="Public:navi_navi" />
+<body>
+<div class="container">
+	<div class="index-left-list">
+	<h4><a href="/stock/change_trade">板块涨幅榜</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>板块名称</th>
+        <th>涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['changeTradeList']" key='k' id="d">
+	     <tr>
+			<td>{$k}</td>
+            <td><a href="/stock/index/?keyword={$d.name}">{$d.name}</a></td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	   </table>
+	<h4><a href="/stock/change">个股涨幅榜</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票名称</th>
+        <th>涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['changeStockList']" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	  </table>
+	</div>
+    <div class="index-main">
+    <h3>上证指数</h3>
+    <img src="http://img.ceziling.com/stock/Images/chart.png" class="img-rounded">
+	<h4><a href="/stock/best">高分股票</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>当前股价</th>
+		<th>涨跌幅</th>
+		<th>推荐指数</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['bestStockList']" key='k' id="d">
+	     <tr>
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+            <td>
+				<strong><em style="color:red;">{$d.score}</em></strong>
+            </td>
+        </tr>
+       </volist> 
+       </tbody>
+	   </table>
+    </div>
+	<div class="sub">
+	<h4><a href="/news">财经要闻</a></h4>
+	<div class="rank">
+		<ul>
+			<volist name="list['newsList']" key="key" id="h">
+			<li><a href="/news/{$h.id}.html" title="{$h.title}" target="_blank">{$h.short_title}</a></li>
+			</volist>
+		</ul>
+	</div>
+	<h4><a href="/top">热门股票</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>股票代码</th>
+        <th>股票名称</th>
+        <th>3月涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['topStockList']" key='k' id="d">
+	     <tr>
+			<td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	  </table>
+	</div>
+<include file="Public:footer" />

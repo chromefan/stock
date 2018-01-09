@@ -1,0 +1,291 @@
+<include file="Public:header" />
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.one').addClass( 'active')
+    })
+</script>
+<include file="Public:navi_navi" />
+<body>
+<div class="container">
+	<div class="index-left-list">
+	<h4><a href="/stock/change_trade">板块涨幅榜</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>板块名称</th>
+        <th>涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['changeTradeList']" key='k' id="d">
+	     <tr>
+			<td>{$k}</td>
+            <td><a href="/stock/index/?keyword={$d.name}">{$d.name}</a></td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	   </table>
+	<h4><a href="/stock/change">个股涨幅榜</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>排名</th>
+        <th>股票名称</th>
+        <th>涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['changeStockList']" key='k' id="d">
+	     <tr>
+			<td><strong>{$k}</strong></td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	  </table>
+	</div>
+    <div class="index-main">
+    <h3>上证指数</h3>
+    <div id="mchart"></div>
+	<div id="mchart2"></div>
+	<!--<h4><a href="/stock/best">高分股票</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+        <th>股票代码</th>
+        <th>股票名称</th>
+		<th>当前股价</th>
+		<th>涨跌幅</th>
+		<th>推荐指数</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['bestStockList']" key='k' id="d">
+	     <tr>
+            <td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td>{$d.price}</td>
+			<td <gt name="d.chg" value="0"> class="red" </gt> <lt name="d.chg" value="0"> class="green" </lt> ><php>echo $d['chg']*100;</php>%</td>
+            <td>
+				<strong><em style="color:red;">{$d.score}</em></strong>
+            </td>
+        </tr>
+       </volist> 
+       </tbody>
+	   </table>
+	 -->
+    </div>
+	<div class="sub">
+	<h4><a href="/news">财经要闻</a></h4>
+	<div class="rank">
+		<ul>
+			<volist name="list['newsList']" key="key" id="h">
+			<li><a href="/news/{$h.id}.html" title="{$h.title}" target="_blank">{$h.short_title}</a></li>
+			</volist>
+		</ul>
+	</div>
+	<h4><a href="/stock/hot">热门股票</a></h4>
+	<table class="table">
+    <thead>
+    <tr>
+		<th>股票代码</th>
+        <th>股票名称</th>
+        <th>10日涨幅</th>
+    </tr>
+    </thead>
+     <tbody>
+     <volist name="list['hotStockList']" key='k' id="d">
+	     <tr>
+			<td>{$d.code}</td>
+            <td><a href="/{$d.code}.html">{$d.name}</a></td>
+			<td <gt name="d.chg10" value="0"> class="red" </gt> <lt name="d.chg10" value="0"> class="green" </lt> ><php>echo $d['chg10']*100;</php>%</td>
+        </tr>
+      </volist> 
+       </tbody>
+	  </table>
+	</div>
+
+<include file="Public:footer" />
+<script type="text/javascript">
+$(function() {
+
+	$.getJSON('/index/mchart', function(result) {
+		Highcharts.setOptions({
+			global: { useUTC: false  },
+			lang: {
+				months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+				//shortMonths : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+				weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+			},
+		});
+		// Create the chart
+		$('#mchart').highcharts('StockChart', {
+
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: {
+					second: '%Y-%m-%d<br/>%H:%M:%S',
+					minute: '%Y-%m-%d<br/>%H:%M',
+					hour: '%Y-%m-%d<br/>%H:%M',
+					day: '%Y<br/>%m-%d',
+					week: '%Y<br/>%m-%d',
+					month: '%Y-%m',
+					year: '%Y'
+				}
+			},
+			tooltip:{
+           // 日期时间格式化
+                   xDateFormat: '%Y-%m-%d'
+            },
+			rangeSelector : {
+				selected : 1
+			},
+
+			title : {
+				text : '上证指数'
+			},
+			
+			series : [{
+				name : '收盘价',
+				type : 'area',
+				data : result.data,
+				tooltip: {
+					valueDecimals: 2
+				},
+				threshold: null
+			}]
+		});
+	});
+
+});	
+$(function() {
+
+	$.getJSON('/index/mchart/?type=1', function(result) {
+		Highcharts.setOptions({
+			global: { useUTC: false  },
+			lang: {
+				months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+				//shortMonths : ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+				weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+			},
+		});
+		// Create the chart
+		$('#mchart2').highcharts('StockChart', {
+
+			xAxis: {
+				type: 'datetime',
+				dateTimeLabelFormats: {
+					second: '%Y-%m-%d<br/>%H:%M:%S',
+					minute: '%Y-%m-%d<br/>%H:%M',
+					hour: '%Y-%m-%d<br/>%H:%M',
+					day: '%Y<br/>%m-%d',
+					week: '%Y<br/>%m-%d',
+					month: '%Y-%m',
+					year: '%Y'
+				}
+			},
+			tooltip:{
+           // 日期时间格式化
+                   xDateFormat: '%Y-%m-%d'
+            },
+			rangeSelector : {
+				selected : 1
+			},
+
+			title : {
+				text : '沪市A股成交量(亿)'
+			},
+			
+			series : [{
+				name : '成交量',
+				type : 'area',
+				data : result.data,
+				tooltip: {
+					valueDecimals: 2
+				},
+				threshold: null
+			}]
+		});
+	});
+
+});	
+//双线
+/*$(function() {
+	var seriesOptions = [],
+		yAxisOptions = [],
+		seriesCounter = 0,
+		names = ['指数', '成交量'],
+		colors = Highcharts.getOptions().colors;
+	
+	var path = "/index/mchart/";
+	$.each(names, function(i, name) {
+	
+		$.getJSON(path+ '?type=' +i ,	function(result) {
+			var data = result.data;
+			seriesOptions[i] = {
+				name: name,
+				data: data
+			};
+
+			// As we're loading the data asynchronously, we don't know what order it will arrive. So
+			// we keep a counter and create the chart when all the data is loaded.
+			seriesCounter++;
+
+			if (seriesCounter == names.length) {
+				createChart();
+			}
+		});
+	});
+
+
+
+	// create the chart when all data is loaded
+	function createChart() {
+
+		$('#mchart2').highcharts('StockChart', {
+		    chart: {
+		    },
+
+		    rangeSelector: {
+		        selected: 4
+		    },
+
+		    yAxis: {
+		    	labels: {
+		    		formatter: function() {
+		    			return (this.value > 0 ? '+' : '') + this.value + '%';
+		    		}
+		    	},
+		    	plotLines: [{
+		    		value: 0,
+		    		width: 2,
+		    		color: 'silver'
+		    	}]
+		    },
+		    
+		    plotOptions: {
+		    	series: {
+		    		compare: 'percent'
+		    	}
+		    },
+		    
+		    tooltip: {
+		    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+		    	valueDecimals: 2
+		    },
+		    
+		    series: seriesOptions
+		});
+	}
+
+});	*/		
+</script>
+
+<script type="text/javascript" src="http://cdn.hcharts.cn/highstock/2.0.1/highstock.js"></script>
+<script src="/hchart/js/highcharts-more.js"></script>
+<script src="/hchart/js/modules/exporting.js"></script>
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/4.0.1/modules/exporting.js"></script>

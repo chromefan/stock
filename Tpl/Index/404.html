@@ -1,0 +1,20 @@
+<include file="Public:header" />
+<include file="Public:navi" />
+<script>
+function Jump(){
+    window.location.href = '{$jumpUrl}';
+}
+document.onload = setTimeout("Jump()" , 3* 1000);
+</script>
+      <div style="text-align:center;min-height:600px;">
+		<h2 class="navbg"><img src="__IMG__/404.png"></h2>
+		<div id="reg">
+			  <div align="center" style="line-height:2">
+			        <h2 style="color:red;">{$error}</h2>
+			        <notpresent name="closeWin" >
+			          <p>你可以坐等 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后返回；你也可以戳 <a  style="color:#c00"  HREF="{$jumpUrl}" >这里回首页</a><br/>   
+			        </notpresent>
+		 </div>
+	</div>
+</div>
+<include file="Public:footer" />

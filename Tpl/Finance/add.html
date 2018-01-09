@@ -1,0 +1,57 @@
+<include file="Public:header" />
+<form action="/finance/{$action}" method="post" class="definewidth m20">
+<if condition="$data.id egt 1">
+	<input type="hidden" name="id" value="{$data.id}" />
+</if>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td class="tableleft">股票代码</td>
+        <td><input type="text" name="code" value="{$stock.code}" readonly/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">股票名称</td>
+        <td><input type="text" name="name" value="{$stock.name}" readonly/></td>
+    </tr>
+    <tr>
+        <td width="10%" class="tableleft">年份</td>
+		<td><select name="year" >
+		    <volist name="year" id="y">
+			  <option value="{$y}"  <eq name="y" value="$data.year"> selected </eq>>{$y}</option>
+			</eq>
+			</volist>
+		</select></td>
+    </tr>
+    <tr>
+        <td class="tableleft">每股收益</td>
+		<td><input type="text" name="eps" value="{$data.eps}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">净利润(亿)</td>
+		<td><input type="text" name="np" value="{$data.np}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">最高价</td>
+		<td><input type="text" name="price_max" value="{$data.price_max}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">最低价</td>
+		<td><input type="text" name="price_min" value="{$data.price_min}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft"></td>
+        <td>
+            <button type="submit" class="btn btn-primary" type="button">保存</button>&nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				history.go(-1);
+		 });
+
+    });
+</script>

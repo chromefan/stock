@@ -1,0 +1,27 @@
+<include file="Public:header" />
+    <include file="Public:navi"/>
+<script>
+    $(function(){
+        $('.nav').find('li').eq(0).removeClass('active')
+		$('.nav').find('li.six').addClass( 'active')
+    })
+</script>
+	<div class="news-list">
+	<volist name="data.article" id="a">
+		<div class="media">
+              <a class="pull-left" href="/news/{$a.id}.html">
+                <img class="media-object" data-src="{$a.img_url}" alt="{$a.title}" title="{$a.title}" style="width: 200px; height: 140px;" src="{$a.img_url}">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading"><a href="/news/{$a.id}.html" style="color:#000"/>{$a.title}</a>  </h4>		
+				<span style=" margin-left: 20px;"><small>{$a.date}</small></span>
+               <p>{$a.content}</p>
+              </div>
+        </div>
+	</volist>
+		<div class="pagination pagination-centered">
+			<ul><php>echo $data['show']</php></ul>
+		</div>
+	</div>
+	<include file="News:hot" />
+<include file="Public:footer" />
